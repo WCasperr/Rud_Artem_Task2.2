@@ -3,7 +3,8 @@ package MyExceptionPackage;
 import java.lang.*;
 import java.util.InputMismatchException;
 import java.util.Scanner;
-public class Calculator {
+public class Calculator extends DemoClass {
+    MyLogger myLogger = new MyLogger();
     private static float x;
     private static float y;
     public float addition(float x, float y)
@@ -22,46 +23,35 @@ public class Calculator {
     public void calc() {
         Scanner sc = new Scanner(System.in);
         int ops = sc.nextInt();
-        System.out.println("operand 1: ");
+        myLogger.log("operand 1: ");
         try { //when user doesn`t enter numbers , user get message
             x = sc.nextFloat();
-            System.out.println("operand 2: ");
+            myLogger.log("operand 2: ");
             y = sc.nextInt();
         }
         catch (InputMismatchException ex) {
-            System.out.println("/////Введено не число//////");
-            System.out.println("Введите заново");
+            myLogger.log("/////Введено не число//////\n Введите заново" );
+
         }
         switch(ops)
         {
             case(1):
-                System.out.println("x + y = " +addition(x, y)); break;
+                myLogger.log("x + y = " +addition(x, y));break;
             case(2):
-                System.out.println("x - y = " +subtraction(x, y)); break;
+                myLogger.log("x - y = " +subtraction(x, y)); break;
             case(3):
-                System.out.println("x * y = " + multiplication(x, y)); break;
+                myLogger.log("x * y = " + multiplication(x, y)); break;
             case(4):
                 try { // when user enter second operand "0" , get message about division by zero
                     if (y == 0) throw new MyException(y);
-                    else System.out.println("x / y = " +division(x, y));
+                    else myLogger.log("x / y = " +division(x, y));
                 }
                 catch (MyException e){
-                    System.out.println("You can`t divine by " + e.getNumber() + " , try again");
-                    System.out.println("What operation? (1 = '+', 2 = '-', 3 = '*', 4 = '/')");
+                    myLogger.log("You can`t divine by " + e.getNumber() + " , try again");
+                    myLogger.log("What operation? (1 = '+', 2 = '-', 3 = '*', 4 = '/')");
                     calc();
                 }
             default: break;
         }
-    }
-    public static void main (String[] args)
-    {
-        Scanner sc = new Scanner(System.in);
-        System.out.println("What operation? ('+', '-', '*', '/')");
-        System.out.println(" Enter 1 for Addition");
-        System.out.println(" Enter 2 for Subtraction");
-        System.out.println(" Enter 3 for Multiplication");
-        System.out.println(" Enter 4 for Division");
-        Calculator calc = new Calculator();
-        calc.calc();
     }
 }
