@@ -52,10 +52,8 @@ public class Test2 {
     }
 
 
-
     @AfterTest
     public void quit() {
-
         driver.quit();
     }
 
